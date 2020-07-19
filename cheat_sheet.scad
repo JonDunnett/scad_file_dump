@@ -1,4 +1,5 @@
 // facet number kind of like anti aliasing // resolution
+// 1,000 seems fine -- dont do 10,000 
 $fn=100;
 
 // shapes 
