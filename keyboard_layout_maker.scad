@@ -90,11 +90,11 @@ module cons_xu_row( x_edge_offset, y_edge_offset, size, numkeys) {
 };
 
 // bare plate with no holes 
-module plate( rows , cols ) {
+module plate( rows , cols , height=PLATE_THICKNESS) {
   cube([
     MAX_X,
     MAX_Y,
-    PLATE_THICKNESS
+    height
   ]);
 };
 
@@ -153,16 +153,21 @@ module sixty_ansi_layout () {
 module sixty_case() {
   difference () {
     cube([
-      MAX_X + 2,
-      MAX_Y + 2,
-      10
+      MAX_X + 4,
+      MAX_Y + 4,
+      12
     ]);
-    #translate([0,0,10-PLATE_THICKNESS])
+    rotate(0, [1,0,0]) {
+    translate([2,2,10.5])
+    plate(ROWS,COLS,20);
+     
+    translate([3.5,3.5,2])
     cube([
-      MAX_X,
-      MAX_Y,
-      9
+      MAX_X - 3,
+      MAX_Y - 3,
+      20
     ]);
+    }
   }
 };
 
@@ -170,3 +175,17 @@ sixty_ansi_layout();
 
 translate([0,105,0])
   sixty_case();
+
+/* this is like a stand to incline the keyboard
+translate([305,0,0])
+difference () { 
+#cube([MAX_X + 6, MAX_Y + 4, 20]);
+translate([1,2,0])
+rotate(10,[1,0,0])
+  cube([
+    MAX_X + 4,
+    MAX_Y + 4,
+    200
+  ]);
+};
+*/
