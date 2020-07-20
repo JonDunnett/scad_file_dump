@@ -150,5 +150,23 @@ module sixty_ansi_layout () {
   };
 };
 
-translate([5,5,0])
-  sixty_ansi_layout(); 
+module sixty_case() {
+  difference () {
+    cube([
+      MAX_X + 2,
+      MAX_Y + 2,
+      10
+    ]);
+    #translate([0,0,10-PLATE_THICKNESS])
+    cube([
+      MAX_X,
+      MAX_Y,
+      9
+    ]);
+  }
+};
+
+sixty_ansi_layout();
+
+translate([0,105,0])
+  sixty_case();
