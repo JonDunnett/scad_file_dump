@@ -1,6 +1,7 @@
 // constants 
 ROWS=5;
 COLS=15;
+PLATE_THICKNESS=1.5;
 X_PADDING=5;
 Y_PADDING=5;
 STD_KEY_WIDTH=14;
@@ -36,7 +37,7 @@ module sized_switch_mount(trans_vect,size=1) {
      cube([
        key_width(size),
        STD_KEY_HEIGHT,
-       1.2
+       PLATE_THICKNESS + 0.2
       ]);   
 };
 
@@ -93,7 +94,7 @@ module plate( rows , cols ) {
   cube([
     MAX_X,
     MAX_Y,
-    1
+    PLATE_THICKNESS
   ]);
 };
 
