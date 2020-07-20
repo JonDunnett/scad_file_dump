@@ -138,17 +138,16 @@ module sixty_ansi_layout () {
     large_key_left(key_size=2.25, row=3, hole_size=2.25);
   
     // row 4
-    //large_key_right(key_size=1.25*4, row=4, hole_size=1.25*4);
     large_key_right(key_size=6.25, row=4, hole_size=6.25, offset=4*1.25);
-    //large_key_left(key_size=1.25*3, row=4, hole_size=1.25*3);
     large_key_right(key_size=1.25, row=4, hole_size=1);
     large_key_right(key_size=1.25, row=4, hole_size=1, offset=1.25);
     large_key_right(key_size=1.25, row=4, hole_size=1, offset=2.5);
     large_key_right(key_size=1.25, row=4, hole_size=1, offset=3.75);
-    large_key_left(key_size=1.25, row=4, hole_size=1);
-    large_key_left(key_size=1.25, row=4, hole_size=1, offset=1.25);
-    large_key_left(key_size=1.25, row=4, hole_size=1, offset=2.5);
+    large_key_left (key_size=1.25, row=4, hole_size=1);
+    large_key_left (key_size=1.25, row=4, hole_size=1, offset=1.25);
+    large_key_left (key_size=1.25, row=4, hole_size=1, offset=2.5);
   };
 };
 
-sixty_ansi_layout(); 
+translate([5,5,0])
+  sixty_ansi_layout(); 
