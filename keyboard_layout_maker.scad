@@ -1,15 +1,16 @@
 // constants 
 ROWS=5;
 COLS=15;
-PLATE_THICKNESS=1.5;
+PLATE_THICKNESS=3;
 X_PADDING=5;
 Y_PADDING=5;
-STD_KEY_WIDTH=14;
-STD_KEY_HEIGHT=14;
-STD_CTC_DIFF_X= X_PADDING + STD_KEY_HEIGHT;
-STD_CTC_DIFF_Y= Y_PADDING + STD_KEY_WIDTH;
+STD_KEY_WIDTH=14.3;
+STD_KEY_HEIGHT=14.6;
+STD_CTC_DIFF_X= X_PADDING + STD_KEY_WIDTH;
+STD_CTC_DIFF_Y= Y_PADDING + STD_KEY_HEIGHT;
 MAX_X = X_PADDING + COLS*STD_CTC_DIFF_X;
 MAX_Y = Y_PADDING + ROWS*STD_CTC_DIFF_Y;
+$fn=100;
 
 // zero indexed row offset for y
 function y_row_offset(idx) = Y_PADDING + idx*(STD_CTC_DIFF_Y);
@@ -98,11 +99,26 @@ module plate( rows , cols , height=PLATE_THICKNESS) {
   ]);
 };
 
-// 60% keyboard plate 
-module sixty_ansi_layout () {
-  difference (){
-    plate(ROWS,COLS);
+module rounded_plate ( rows, cols, radius, height=PLATE_THICKNESS) {
+  hull () {
+    
+    // end points for the plate 
+    points = [ 
+      [ radius , MAX_X-(radius*2)] , 
+      [ radius , MAX_Y-(radius*2)]
+    ];
   
+    // placing cylinders 
+    for( i=[0:1:1] ) {
+     for ( j=[0:1:1]) {
+      translate([points[0][i],points[1][j],0])
+        cylinder(r=radius, h=height); 
+    }};
+    
+  }
+};
+
+module sixty_ansi_layout () {
     // row 0 
     large_key_right(key_size=2,row=0,hole_size=2);
     one_u_row(
@@ -147,6 +163,13 @@ module sixty_ansi_layout () {
     large_key_left (key_size=1.25, row=4, hole_size=1);
     large_key_left (key_size=1.25, row=4, hole_size=1, offset=1.25);
     large_key_left (key_size=1.25, row=4, hole_size=1, offset=2.5);
+}; 
+
+// 60% keyboard plate 
+module sixty_ansi_plate () {
+  difference (){
+    rounded_plate(ROWS,COLS, 0.5);
+    sixty_ansi_layout(); 
   };
 };
 
@@ -159,7 +182,7 @@ module sixty_case() {
     ]);
     rotate(0, [1,0,0]) {
     translate([2,2,10.5])
-    plate(ROWS,COLS,20);
+    rounded_plate(ROWS,COLS,0.6,20);
      
     translate([3.5,3.5,2])
     cube([
@@ -171,10 +194,11 @@ module sixty_case() {
   }
 };
 
-sixty_ansi_layout();
+//sixty_case();
+//sixty_ansi_plate(ROWS,COLS, 0.5);
 
-translate([0,105,0])
-  sixty_case();
+//translate([0,105,0])
+//  sixty_case();
 
 /* this is like a stand to incline the keyboard
 translate([305,0,0])
